@@ -1,0 +1,48 @@
+<main class="chat-page">
+  <section class="chat-shell" aria-label="Chatbot IA">
+    <header class="chat-header">
+      <div>
+        <h1>Chatbot IA</h1>
+        <p>Assistant technique Java, Spring Boot, Angular et Oracle</p>
+      </div>
+    </header>
+
+    <div class="messages" aria-live="polite">
+      @if (messages.length === 0) {
+        <div class="empty-state">
+          Pose une question pour valider le flux Angular -> Spring Boot -> LLM.
+        </div>
+      }
+
+      @for (chatMessage of messages; track $index) {
+        <article class="message" [class.user]="chatMessage.role === 'user'" [class.assistant]="chatMessage.role === 'assistant'">
+          <p>{{ chatMessage.content }}</p>
+        </article>
+      }
+
+      @if (loading) {
+        <article class="message assistant">
+          <p>Réponse en cours...</p>
+        </article>
+      }
+    </div>
+
+    @if (error) {
+      <p class="error" role="alert">{{ error }}</p>
+    }
+
+    <form class="composer" (ngSubmit)="send()">
+      <textarea
+        name="message"
+        [(ngModel)]="message"
+        placeholder="Explique-moi une NullPointerException en Java"
+        rows="3"
+        [disabled]="loading"
+        aria-label="Message utilisateur">
+      </textarea>
+      <button type="submit" [disabled]="loading || !message.trim()">
+        {{ loading ? 'Envoi...' : 'Envoyer' }}
+      </button>
+    </form>
+  </section>
+</main>
