@@ -8,7 +8,7 @@ import { ChatResponse } from '../models/chat-response';
   providedIn: 'root'
 })
 export class ChatService {
-  private readonly chatUrl = '/api/chat';
+  private readonly chatUrl = 'https://ai-chatbot-backend-nwim.onrender.com/api/chat';
 
   constructor(private readonly http: HttpClient) {
   }
