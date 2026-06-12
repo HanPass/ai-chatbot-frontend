@@ -1,21 +1,48 @@
 <main class="chat-page">
+  <aside class="sidebar" aria-label="Conversations">
+    <button class="new-chat" type="button" (click)="startNewConversation()" [disabled]="loading">
+      Nouvelle conversation
+    </button>
+
+    <div class="conversation-list">
+      @if (conversationsLoading) {
+        <p class="sidebar-state">Chargement...</p>
+      }
+
+      @if (!conversationsLoading && conversations.length === 0) {
+        <p class="sidebar-state">Aucune conversation</p>
+      }
+
+      @for (conversation of conversations; track conversation.id) {
+        <div class="conversation-item" [class.active]="conversation.id === currentConversationId">
+          <button type="button" class="select-conversation" (click)="selectConversation(conversation)">
+            {{ conversation.title }}
+          </button>
+          <button type="button" class="delete-conversation" (click)="deleteConversation(conversation, $event)">
+            Supprimer
+          </button>
+        </div>
+      }
+    </div>
+  </aside>
+
   <section class="chat-shell" aria-label="Chatbot IA">
     <header class="chat-header">
       <div>
         <h1>Chatbot IA</h1>
-        <p>Assistant technique Java, Spring Boot, Angular et Oracle</p>
+        <p>Assistant technique avec mémoire conversationnelle</p>
       </div>
     </header>
 
     <div class="messages" aria-live="polite">
       @if (messages.length === 0) {
         <div class="empty-state">
-          Pose une question pour valider le flux Angular -> Spring Boot -> LLM.
+          Commence une nouvelle conversation ou sélectionne-en une dans la liste.
         </div>
       }
 
       @for (chatMessage of messages; track $index) {
-        <article class="message" [class.user]="chatMessage.role === 'user'" [class.assistant]="chatMessage.role === 'assistant'">
+        <article class="message" [class.user]="messageClass(chatMessage) === 'user'" [class.assistant]="messageClass(chatMessage) === 'assistant'">
           <p>{{ chatMessage.content }}</p>
         </article>
       }

@@ -1,12 +1,82 @@
 .chat-page {
   min-height: 100vh;
   display: grid;
-  place-items: center;
+  grid-template-columns: 280px minmax(0, 920px);
+  justify-content: center;
+  align-items: stretch;
+  gap: 16px;
   padding: 32px 16px;
 }
 
+.sidebar {
+  min-height: min(760px, calc(100vh - 64px));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #d9e0ea;
+  border-radius: 8px;
+  box-shadow: 0 18px 50px rgba(23, 32, 51, 0.10);
+}
+
+.new-chat {
+  width: 100%;
+  align-self: stretch;
+}
+
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.sidebar-state {
+  margin: 8px 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+.conversation-item {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  background: #f8fafc;
+  border: 1px solid #e0e6ef;
+  border-radius: 8px;
+}
+
+.conversation-item.active {
+  border-color: #1f6feb;
+  background: #edf5ff;
+}
+
+.select-conversation {
+  min-height: auto;
+  padding: 0;
+  text-align: left;
+  background: transparent;
+  color: #172033;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delete-conversation {
+  justify-self: start;
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+  color: #a4001e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .chat-shell {
-  width: min(920px, 100%);
+  width: 100%;
   min-height: min(760px, calc(100vh - 64px));
   display: grid;
   grid-template-rows: auto 1fr auto auto;
@@ -126,11 +196,21 @@ button:disabled {
 
 @media (max-width: 640px) {
   .chat-page {
+    grid-template-columns: 1fr;
     padding: 0;
+    gap: 0;
+  }
+
+  .sidebar {
+    min-height: auto;
+    max-height: 220px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
 
   .chat-shell {
-    min-height: 100vh;
+    min-height: calc(100vh - 220px);
     border: 0;
     border-radius: 0;
   }

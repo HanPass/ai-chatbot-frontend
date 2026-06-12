@@ -1,14 +1,22 @@
 # AI Chatbot Frontend
 
-Frontend Angular du MVP chatbot IA.
+Frontend Angular du chatbot IA avec conversations persistées côté backend.
 
 ## Architecture
 
 - `ChatComponent` affiche la page de chat, les messages, l'état loading et les erreurs.
-- `ChatService` appelle uniquement le backend Spring Boot sur `POST /api/chat`.
+- `ChatComponent` affiche aussi une sidebar de conversations.
+- `ChatService` appelle uniquement le backend Spring Boot.
 - Les DTOs frontend sont dans `src/app/models`.
 
 Le frontend n'appelle jamais directement l'API IA.
+
+## Endpoints utilisés
+
+- `POST /api/chat` : envoyer un message.
+- `GET /api/conversations` : lister les conversations.
+- `GET /api/conversations/{id}/messages` : charger une conversation.
+- `DELETE /api/conversations/{id}` : supprimer une conversation.
 
 ## Lancer le frontend
 
@@ -34,12 +42,11 @@ Le fichier `proxy.conf.json` redirige `/api` vers le backend :
 ## Flux testé
 
 ```text
-Angular textarea -> POST /api/chat -> Spring Boot -> LLM -> réponse affichée
+Angular -> Spring Boot -> PostgreSQL -> LLM -> PostgreSQL -> Angular
 ```
 
 ## Points d'extension
 
 - Ajouter le streaming côté UI avec SSE ou WebSocket.
-- Ajouter un historique local ou persistant.
 - Ajouter un affichage Markdown pour les réponses techniques.
 - Ajouter une configuration d'environnement si l'URL backend change hors proxy local.
